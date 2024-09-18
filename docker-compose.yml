@@ -1,0 +1,34 @@
+services:
+    freshrss:
+        restart: unless-stopped
+        logging:
+            options:
+                max-size: 10m
+        ports:
+            - 8080:80
+        environment:
+            - TZ=Europe/Paris
+            - CRON_MIN=1,31
+        volumes:
+            - freshrss_data:/var/www/FreshRSS/data
+            - freshrss_extensions:/var/www/FreshRSS/extensions
+        container_name: freshrss
+        image: freshrss/freshrss
+        networks:
+          - proxy
+        labels:
+          - traefik.enable=true
+          - traefik.http.routers.freshrss.rule=Host(`freshrss.localhost`)
+          - traefik.http.services.freshrss.loadbalancer.server.port=80
+          - traefik.http.routers.freshrss.middlewares=myauth
+volumes:
+    freshrss_data:
+        external: true
+        name: freshrss_data
+    freshrss_extensions:
+        external: true
+        name: freshrss_extensions
+
+networks:
+  proxy:
+    external: true
