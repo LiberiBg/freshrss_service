@@ -4,8 +4,8 @@ services:
         logging:
             options:
                 max-size: 10m
-        ports:
-            - 8080:80
+        expose:
+            - "80"
         environment:
             - TZ=Europe/Paris
             - CRON_MIN=1,31
@@ -18,9 +18,9 @@ services:
         - reverse-proxy
         labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.syncthing.entrypoints=websecure"
-        - "traefik.http.routers.syncthing.tls=true"
-
+        - "traefik.http.routers.linkwarden.entrypoints=websecure"
+        - "traefik.http.routers.linkwarden.middlewares=middleware-authelia@file"
+        - "traefik.http.routers.linkwarden.tls=true"
 networks:
   reverse-proxy:
     external: true
