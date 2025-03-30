@@ -18,9 +18,9 @@ services:
         - reverse-proxy
         labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.linkwarden.entrypoints=websecure"
-        - "traefik.http.routers.linkwarden.middlewares=middleware-authelia@file"
-        - "traefik.http.routers.linkwarden.tls=true"
+        - "traefik.http.routers.freshrss.entrypoints=websecure"
+        - "traefik.http.routers.freshrss.middlewares=middleware-authelia@file"
+        - "traefik.http.routers.freshrss.tls=true"
 networks:
   reverse-proxy:
     external: true
